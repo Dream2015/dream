@@ -9,7 +9,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"
-            android:configChanges="orientation">
+            android:configChanges="orientation"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,7 +19,8 @@
         </activity>
 
         <activity android:name=".TestActivity"
-            android:configChanges="orientation">
+            android:configChanges="orientation"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="com.android.dongnan.androidapi.action.FILTER_ACTION" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -26,7 +28,8 @@
         </activity>
 
         <activity android:name=".Test2Activity"
-            android:configChanges="orientation">
+            android:configChanges="orientation"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="com.android.dongnan.androidapi.action.FILTER_ACTION" />
                 <category android:name="android.intent.category.DEFAULT" />
