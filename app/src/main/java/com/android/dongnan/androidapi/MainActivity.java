@@ -56,7 +56,6 @@ public class MainActivity extends ListActivity {
             return myData;
         }
 
-        Log.v("dongnan", "DEF:" + path);
         Map<String, Boolean> entries = new HashMap<String, Boolean>();
 
         String[] defPath = path.split("\\.");
@@ -66,7 +65,6 @@ public class MainActivity extends ListActivity {
                 continue;
             }
 
-            Log.v("dongnan", "Name:" + name);
             String[] lablePath = name.split("\\.");
 
             Map<String, Object> temp = new HashMap<>();
@@ -82,9 +80,7 @@ public class MainActivity extends ListActivity {
             }
 
             String title = lablePath[defPath.length];
-            Log.v("dongnan", "Title:" + title);
             title = title.substring(0, 1).toUpperCase() + title.substring(1);
-            Log.v("dongnan", "Title:" + title);
 
             if(entries.get(title) == null) {
                 temp.put("title", title);
@@ -95,7 +91,6 @@ public class MainActivity extends ListActivity {
 
         }
         Collections.sort(myData, sDisplayNameComparator);
-        Log.v("dongnan", "My Data:" + myData.size());
 
         return myData;
     }
