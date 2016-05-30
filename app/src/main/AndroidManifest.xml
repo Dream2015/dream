@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".TestActivity"
+        <activity android:name=".test.TestActivity"
             android:configChanges="orientation"
             android:launchMode="singleTop">
             <intent-filter>
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Test2Activity"
+        <activity android:name=".test.Test2Activity"
             android:configChanges="orientation"
             android:launchMode="singleTop">
             <intent-filter>

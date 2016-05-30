@@ -1,10 +1,13 @@
 package com.android.dongnan.androidapi;
 
+import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -25,8 +28,13 @@ public class MainActivity extends ListActivity {
         Intent intent = getIntent();
         String path = intent.getStringExtra(MainConstant.FILTER_EXTRA);
 
-        if (path == null) {
-            path = "";
+        if (TextUtils.isEmpty(path)) {
+            path = this.getPackageName();
+        } else {
+            String defName = this.getPackageName();
+            String title = path.substring(defName.length());
+            ActionBar actionBar = getActionBar();
+            actionBar.setTitle(title);
         }
 
         setListAdapter(new SimpleAdapter(this, getData(path),
@@ -44,9 +52,11 @@ public class MainActivity extends ListActivity {
         PackageManager pm = getPackageManager();
         List<ResolveInfo> infos = pm.queryIntentActivities(mainIntent, 0);
 
-        if (null == list)
+        if (null == infos) {
             return myData;
+        }
 
+        Log.v("dongnan", "DEF:" + path);
         Map<String, Boolean> entries = new HashMap<String, Boolean>();
 
         String[] defPath = path.split("\\.");
@@ -56,6 +66,7 @@ public class MainActivity extends ListActivity {
                 continue;
             }
 
+            Log.v("dongnan", "Name:" + name);
             String[] lablePath = name.split("\\.");
 
             Map<String, Object> temp = new HashMap<>();
@@ -70,8 +81,10 @@ public class MainActivity extends ListActivity {
                 temp.put("intent", intent);
             }
 
-            String  title = lablePath[defPath.length];
+            String title = lablePath[defPath.length];
+            Log.v("dongnan", "Title:" + title);
             title = title.substring(0, 1).toUpperCase() + title.substring(1);
+            Log.v("dongnan", "Title:" + title);
 
             if(entries.get(title) == null) {
                 temp.put("title", title);
@@ -82,6 +95,7 @@ public class MainActivity extends ListActivity {
 
         }
         Collections.sort(myData, sDisplayNameComparator);
+        Log.v("dongnan", "My Data:" + myData.size());
 
         return myData;
     }
@@ -95,25 +109,6 @@ public class MainActivity extends ListActivity {
                 }
             };
 
-    protected Intent activityIntent(String pkg, String componentName) {
-        Intent result = new Intent();
-        result.setClassName(pkg, componentName);
-        return result;
-    }
-
-    protected Intent browseIntent(String path) {
-        Intent result = new Intent();
-        result.setClass(this, MainActivity.class);
-        result.putExtra(MainConstant.FILTER_EXTRA, path);
-        return result;
-    }
-
-    protected void addItem(List<Map<String, Object>> data, String name, Intent intent) {
-        Map<String, Object> temp = new HashMap<String, Object>();
-        temp.put("title", name);
-        temp.put("intent", intent);
-        data.add(temp);
-    }
 
     @Override
     @SuppressWarnings("unchecked")
@@ -121,7 +116,6 @@ public class MainActivity extends ListActivity {
         Map<String, Object> map = (Map<String, Object>)l.getItemAtPosition(position);
 
         Intent intent = new Intent((Intent) map.get("intent"));
-        intent.addCategory(Intent.CATEGORY_SAMPLE_CODE);
         startActivity(intent);
     }
 }
