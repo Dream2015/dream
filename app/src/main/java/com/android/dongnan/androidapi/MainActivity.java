@@ -35,58 +35,52 @@ public class MainActivity extends ListActivity {
         getListView().setTextFilterEnabled(true);
     }
 
-    protected List<Map<String, Object>> getData(String prefix) {
+    protected List<Map<String, Object>> getData(String path) {
         List<Map<String, Object>> myData = new ArrayList<Map<String, Object>>();
 
         Intent mainIntent = new Intent(MainConstant.FILTER_ACTION, null);
         mainIntent.addCategory(Intent.CATEGORY_DEFAULT);
 
         PackageManager pm = getPackageManager();
-        List<ResolveInfo> list = pm.queryIntentActivities(mainIntent, 0);
+        List<ResolveInfo> infos = pm.queryIntentActivities(mainIntent, 0);
 
         if (null == list)
             return myData;
 
-        String[] prefixPath;
-        String prefixWithSlash = prefix;
-
-        if (prefix.equals("")) {
-            prefixPath = null;
-        } else {
-            prefixPath = prefix.split("/");
-            prefixWithSlash = prefix + "/";
-        }
-
-        int len = list.size();
-
         Map<String, Boolean> entries = new HashMap<String, Boolean>();
 
-        for (int i = 0; i < len; i++) {
-            ResolveInfo info = list.get(i);
-            CharSequence labelSeq = info.loadLabel(pm);
-            String label = labelSeq != null
-                    ? labelSeq.toString()
-                    : info.activityInfo.name;
-
-            if (prefixWithSlash.length() == 0 || label.startsWith(prefixWithSlash)) {
-
-                String[] labelPath = label.split("/");
-
-                String nextLabel = prefixPath == null ? labelPath[0] : labelPath[prefixPath.length];
-
-                if ((prefixPath != null ? prefixPath.length : 0) == labelPath.length - 1) {
-                    addItem(myData, nextLabel, activityIntent(
-                            info.activityInfo.applicationInfo.packageName,
-                            info.activityInfo.name));
-                } else {
-                    if (entries.get(nextLabel) == null) {
-                        addItem(myData, nextLabel, browseIntent(prefix.equals("") ? nextLabel : prefix + "/" + nextLabel));
-                        entries.put(nextLabel, true);
-                    }
-                }
+        String[] defPath = path.split("\\.");
+        for(ResolveInfo info : infos) {
+            String name = info.activityInfo.name;
+            if(!name.contains(path)) {
+                continue;
             }
-        }
 
+            String[] lablePath = name.split("\\.");
+
+            Map<String, Object> temp = new HashMap<>();
+            if(lablePath.length - defPath.length == 1) {
+                Intent intent = new Intent();
+                intent.setClassName(info.activityInfo.applicationInfo.packageName, info.activityInfo.name);
+                temp.put("intent", intent);
+            } else {
+                Intent intent = new Intent();
+                intent.setClass(this, MainActivity.class);
+                intent.putExtra(MainConstant.FILTER_EXTRA, path + "." + lablePath[defPath.length]);
+                temp.put("intent", intent);
+            }
+
+            String  title = lablePath[defPath.length];
+            title = title.substring(0, 1).toUpperCase() + title.substring(1);
+
+            if(entries.get(title) == null) {
+                temp.put("title", title);
+                entries.put(title, true);
+                myData.add(temp);
+            }
+
+
+        }
         Collections.sort(myData, sDisplayNameComparator);
 
         return myData;
