@@ -34,7 +34,9 @@ public class MainActivity extends ListActivity{
             String defName = this.getPackageName();
             String title = path.substring(defName.length());
             ActionBar actionBar = getActionBar();
-            actionBar.setTitle(title);
+            if(actionBar != null) {
+                actionBar.setTitle(title);
+            }
         }
 
         setListAdapter(new SimpleAdapter(this, getPathData(path), android.R.layout.simple_list_item_1, new String[] {"title"}, new int[]{android.R.id.text1}));
@@ -102,7 +104,6 @@ public class MainActivity extends ListActivity{
         @SuppressWarnings("unchecked")
         Map<String, Object> map = (Map<String, Object>)l.getItemAtPosition(position);
 
-        Log.v("dongnan", "list Click");
         Intent intent = new Intent((Intent) map.get("intent"));
         startActivity(intent);
         super.onListItemClick(l, v, position, id);
