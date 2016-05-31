@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"
-            android:configChanges="orientation">
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,8 +18,7 @@
         </activity>
 
         <activity android:name=".test.TestActivity"
-            android:configChanges="orientation"
-            android:launchMode="singleTop">
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="com.android.dongnan.androidapi.FILTER_ACTION" />
                 <category android:name="com.android.dongnan.androidapi.FILTER_CATEGORY" />
@@ -27,8 +26,7 @@
         </activity>
 
         <activity android:name=".test.Test2Activity"
-            android:configChanges="orientation"
-            android:launchMode="singleTop">
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="com.android.dongnan.androidapi.FILTER_ACTION" />
                 <category android:name="com.android.dongnan.androidapi.FILTER_CATEGORY" />
