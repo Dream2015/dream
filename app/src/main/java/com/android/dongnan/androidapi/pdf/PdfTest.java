@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.pdf.PdfDocument;
 import android.media.Image;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.dongnan.androidapi.R;
 
@@ -65,10 +67,13 @@ public class PdfTest extends Activity {
 
         layout.draw(page.getCanvas());
 
+        Bitmap bitmap = Bitmap.createBitmap(page.getCanvas().getWidth(), page.getCanvas().getHeight(),
+                Bitmap.Config.ALPHA_8);
+         page.getCanvas().drawBitmap(bitmap, 0, 0, paint);
+
         ImageView view = new ImageView(this);
-
-        view.draw(page.getCanvas());
-
+        view.setImageBitmap(bitmap);
+//        view.setImageDrawable(getDrawable(R.mipmap.ic_launcher));
         setContentView(view);
 
         document.finishPage(page);
@@ -83,7 +88,7 @@ public class PdfTest extends Activity {
             }
         }
 
-        try(FileOutputStream out = new FileOutputStream(file);) {
+        try(FileOutputStream out = new FileOutputStream(file)) {
             document.writeTo(out);
             out.flush();
         } catch (IOException e) {
