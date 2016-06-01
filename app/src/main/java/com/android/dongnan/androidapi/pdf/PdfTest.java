@@ -75,6 +75,14 @@ public class PdfTest extends Activity {
 
         File file = new File(Environment.getExternalStorageDirectory(), "demo.pdf");
 
+        if(file != null && !file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         try(FileOutputStream out = new FileOutputStream(file);) {
             document.writeTo(out);
             out.flush();
