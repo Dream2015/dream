@@ -28,6 +28,14 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".view.TextSwitcherTest"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+            <intent-filter>
+                <action android:name="com.android.dongnan.androidapi.FILTER_ACTION" />
+                <category android:name="com.android.dongnan.androidapi.FILTER_CATEGORY" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".test.TestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
