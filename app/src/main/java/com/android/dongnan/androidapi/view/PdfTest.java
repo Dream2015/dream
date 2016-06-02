@@ -1,4 +1,4 @@
-package com.android.dongnan.androidapi.pdf;
+package com.android.dongnan.androidapi.view;
 
 import android.app.Activity;
 import android.graphics.Bitmap;

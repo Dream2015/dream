@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".pdf.PdfTest"
+        <activity android:name=".view.PdfTest"
             android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="com.android.dongnan.androidapi.FILTER_ACTION" />
