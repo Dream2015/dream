@@ -2,22 +2,17 @@ package com.android.dongnan.androidapi.pdf;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.pdf.PdfDocument;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.android.dongnan.androidapi.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,6 +20,7 @@ import java.io.IOException;
 
 /**
  * Created by dream on 16/6/1.
+ * Canvas - Bitmap.
  */
 public class PdfTest extends Activity {
 
@@ -32,10 +28,11 @@ public class PdfTest extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // 1. Create a new instance.
         PdfDocument document = new PdfDocument();
 
+        // 2. Create Page info and page.
         PdfDocument.PageInfo info = new PdfDocument.PageInfo.Builder(612,782,1).create();
-
         PdfDocument.Page page = document.startPage(info);
 
         TextPaint paint = new TextPaint();
@@ -65,11 +62,14 @@ public class PdfTest extends Activity {
         StaticLayout layout = new StaticLayout(text, paint, page.getCanvas().getWidth(),
                 Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
+        // 3. fill the page with StaticLayout data.
         layout.draw(page.getCanvas());
 
+        // 4. Create the bitmap using pdf data.
         Bitmap bitmap = Bitmap.createBitmap(page.getCanvas().getWidth(), page.getCanvas().getHeight(),
-                Bitmap.Config.ALPHA_8);
-         page.getCanvas().drawBitmap(bitmap, 0, 0, paint);
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        layout.draw(canvas);
 
         ImageView view = new ImageView(this);
         view.setImageBitmap(bitmap);
@@ -78,6 +78,7 @@ public class PdfTest extends Activity {
 
         document.finishPage(page);
 
+        // 5. Save it in the local file.
         File file = new File(Environment.getExternalStorageDirectory(), "demo.pdf");
 
         if(file != null && !file.exists()) {
