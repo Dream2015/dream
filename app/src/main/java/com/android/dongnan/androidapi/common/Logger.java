@@ -1,9 +1,8 @@
 package com.android.dongnan.androidapi.common;
 
-import android.content.Context;
-
 /**
  * Created by dream on 16/6/4.
+ * This class is used to create the common TAG to check the Log more easily.
  */
 public class Logger {
 

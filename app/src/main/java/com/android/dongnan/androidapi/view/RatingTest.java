@@ -11,6 +11,9 @@ import com.android.dongnan.androidapi.common.Logger;
 
 /**
  * Created by dream on 16/6/4.
+ *
+ * When added layout.setOrientation(LinearLayout.VERTICAL);
+ * The Star will be double, but the value will be same. It is strange.
  */
 public class RatingTest extends Activity implements RatingBar.OnRatingBarChangeListener{
     private static final String TAG = RatingTest.class.getSimpleName();
