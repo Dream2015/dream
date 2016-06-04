@@ -7,18 +7,23 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.android.dongnan.androidapi.common.Logger;
+
 /**
  * Created by dream on 16/6/4.
  */
 public class RatingTest extends Activity implements RatingBar.OnRatingBarChangeListener{
+    private static final String TAG = RatingTest.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Logger.v(TAG, "onCreate");
+
         LinearLayout layout = new LinearLayout(this);
+//        layout.setOrientation(LinearLayout.VERTICAL);
         layout.setGravity(Gravity.CENTER);
-        layout.setOrientation(LinearLayout.VERTICAL);
 
         RatingBar ratingBar = new RatingBar(this);
         ratingBar.setNumStars(5);
