@@ -28,7 +28,6 @@ public class FloatingButtonViewTest extends Activity{
         view.setText("Good Luck");
 
 
-
         setContentView(R.layout.floating_action_button);
 
     }
