@@ -7,4 +7,28 @@
         android:summary="Tap the check box and see the details"
         android:defaultValue="true"/>
 
+    <PreferenceCategory
+        android:title="Category"
+        android:key="prefer_category">
+        <Preference
+            android:key="category_sub_1"
+            android:title="Sub1"
+            android:summary="Sub title 1"/>
+        <CheckBoxPreference
+            android:key="category_sub_2"
+            android:title="Sub2"
+            android:summary="Sub Title 2"
+            android:defaultValue="false"/>
+    </PreferenceCategory>
+
+    <PreferenceScreen
+        android:key="screen1"
+        android:title="Screen1"
+        android:persistent="false">
+        <RingtonePreference
+            android:key="ringtone"
+            android:title="Ringtone"
+            android:summary="Ringtone details"
+            android:ringtoneType="notification"/>
+    </PreferenceScreen>
 </PreferenceScreen>
